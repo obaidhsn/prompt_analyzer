@@ -1,0 +1,46 @@
+<div id="runs-results">
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Time</th><th>Project</th><th>Input</th><th>Response</th><th>Model</th>
+        <th>Latency</th><th>Tokens</th><th>Cost</th></tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr onclick="location.href='/runs/{{ r.id }}'">
+        <td class="nowrap muted">{{ r.created_at|ago }}</td>
+        <td>{{ r.project }}</td>
+        <td>{{ r.user_input|truncate_text(48) }}</td>
+        <td class="muted">{{ r.response|truncate_text(48) }}</td>
+        <td class="mono nowrap">
+          {% if r.provider %}<span class="badge provider">{{ r.provider }}</span>{% endif %}
+          {{ r.model or '—' }}
+        </td>
+        <td class="nowrap">{{ r.latency_ms|ms }}</td>
+        <td>{{ r.total_tokens|num }}</td>
+        <td>
+          {% if r.error %}<span class="badge err">error</span>{% else %}{{ r.cost|money }}{% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="muted">No runs match your filters.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if page.pages > 1 %}
+<div class="pager">
+  <span>Page {{ page.page }} of {{ page.pages }} · {{ page.total|num }} runs</span>
+  {% set base = '/' ~ nav ~ '?' %}
+  {% set qs = 'model=' ~ (filters.model or '') ~ '&provider=' ~ (filters.provider or '') ~ '&q=' ~ (filters.q or '') %}
+  {% if page.has_prev %}
+  <a class="btn sm" href="?{{ qs }}&page={{ page.page - 1 }}"
+     hx-get="?{{ qs }}&page={{ page.page - 1 }}" hx-target="#runs-results" hx-swap="outerHTML">← Prev</a>
+  {% endif %}
+  {% if page.has_next %}
+  <a class="btn sm" href="?{{ qs }}&page={{ page.page + 1 }}"
+     hx-get="?{{ qs }}&page={{ page.page + 1 }}" hx-target="#runs-results" hx-swap="outerHTML">Next →</a>
+  {% endif %}
+</div>
+{% endif %}
+</div>

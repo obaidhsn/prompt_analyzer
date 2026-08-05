@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}v{{ v.number }} · PromptAnalyzer{% endblock %}
+{% block heading %}Prompt v{{ v.number }}{% endblock %}
+{% block content %}
+<div class="flex between">
+  <div class="btn-row">
+    <a class="btn sm" href="/projects/{{ v.project_id }}">← Project</a>
+    <a class="btn sm" href="/projects/{{ v.project_id }}/diff?b={{ v.version_id }}">⇄ Diff</a>
+    <span class="pill-v">v{{ v.number }}</span>
+    <span class="badge mono">{{ v.hash[:16] }}</span>
+  </div>
+  <span class="muted">Created {{ v.created_at|dt }}</span>
+</div>
+
+<div class="grid cols-3" style="margin-top:16px">
+  <div class="card stat"><span class="label">Runs</span><span class="value">{{ v.runs|num }}</span></div>
+  <div class="card stat"><span class="label">Avg Latency</span><span class="value">{{ v.avg_latency|ms }}</span></div>
+  <div class="card stat"><span class="label">Avg Cost</span><span class="value">{{ v.avg_cost|money }}</span></div>
+</div>
+
+<div class="block-label">System prompt</div>
+<div class="prompt-box">{{ v.system_prompt }}</div>
+
+<div class="section-title">Runs using this version</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Time</th><th>Input</th><th>Model</th><th>Latency</th><th>Tokens</th><th>Cost</th></tr></thead>
+    <tbody>
+      {% for r in runs.items %}
+      <tr onclick="location.href='/runs/{{ r.id }}'">
+        <td class="nowrap muted">{{ r.created_at|ago }}</td>
+        <td>{{ r.user_input|truncate_text(60) }}</td>
+        <td class="mono">{{ r.model or '—' }}</td>
+        <td class="nowrap">{{ r.latency_ms|ms }}</td>
+        <td>{{ r.total_tokens|num }}</td>
+        <td>{{ r.cost|money }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">No runs recorded for this version.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Diff · {{ project_name }}{% endblock %}
+{% block heading %}Compare prompt versions{% endblock %}
+{% block content %}
+<a class="btn sm" href="/projects/{{ project_id }}">← {{ project_name }}</a>
+
+<form method="get" action="/projects/{{ project_id }}/diff" class="filters" style="margin-top:16px">
+  <label class="muted">Base</label>
+  <select name="a">
+    {% for v in versions %}
+    <option value="{{ v.id }}" {{ 'selected' if left and v.id == left.id }}>v{{ v.version }} — {{ v.hash[:8] }}</option>
+    {% endfor %}
+  </select>
+  <span>⇄</span>
+  <label class="muted">Compare</label>
+  <select name="b">
+    {% for v in versions %}
+    <option value="{{ v.id }}" {{ 'selected' if right and v.id == right.id }}>v{{ v.version }} — {{ v.hash[:8] }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn primary sm" type="submit">Show diff</button>
+</form>
+
+{% if diff_html %}
+<div class="card" style="padding:0">
+  <div class="diff-wrap">{{ diff_html|safe }}</div>
+</div>
+{% else %}
+<div class="empty card">Select two versions to compare.</div>
+{% endif %}
+{% endblock %}

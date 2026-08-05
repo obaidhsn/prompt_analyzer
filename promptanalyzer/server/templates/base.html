@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}PromptAnalyzer{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/app.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>" />
+  <!-- Dynamic interactivity (loaded from CDN; dashboard degrades gracefully offline). -->
+  <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">🧬</div>
+        <div>
+          <b>PromptAnalyzer</b>
+          <small>Git for prompts</small>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="/" class="{{ 'active' if nav == 'home' }}"><span class="ic">◎</span> Overview</a>
+        <a href="/projects" class="{{ 'active' if nav == 'projects' }}"><span class="ic">▦</span> Projects</a>
+        <a href="/runs" class="{{ 'active' if nav == 'runs' }}"><span class="ic">≡</span> Run Logs</a>
+        <a href="/search" class="{{ 'active' if nav == 'search' }}"><span class="ic">⌕</span> Search</a>
+      </nav>
+      <div class="spacer"></div>
+      <div class="foot">
+        v{{ version }} · local-first<br />
+        <a href="/api/docs">API docs</a>
+      </div>
+    </aside>
+    <div class="main">
+      <div class="topbar">
+        <h1>{% block heading %}{% endblock %}</h1>
+        <div class="search">
+          <form action="/search" method="get" class="searchbox">
+            <span class="mag">⌕</span>
+            <input type="search" name="q" placeholder="Search prompts, inputs, responses…" />
+          </form>
+        </div>
+      </div>
+      <div class="content">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

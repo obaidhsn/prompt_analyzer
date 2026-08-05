@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+  <rect width="960" height="540" fill="#0b0e14"/>
+  <!-- sidebar -->
+  <rect width="200" height="540" fill="#11161f"/>
+  <rect x="16" y="20" width="30" height="30" rx="8" fill="#6d8bff"/>
+  <text x="54" y="34" fill="#e6edf3" font-size="14" font-weight="700">PromptAnalyzer</text>
+  <text x="54" y="48" fill="#5b6676" font-size="10">Git for prompts</text>
+  <rect x="12" y="78" width="176" height="30" rx="8" fill="#1b2331"/>
+  <text x="28" y="98" fill="#e6edf3" font-size="12">◎  Overview</text>
+  <text x="28" y="130" fill="#8b98ab" font-size="12">▦  Projects</text>
+  <text x="28" y="160" fill="#8b98ab" font-size="12">≡  Run Logs</text>
+  <text x="28" y="190" fill="#8b98ab" font-size="12">⌕  Search</text>
+  <!-- topbar -->
+  <line x1="200" y1="58" x2="960" y2="58" stroke="#232c3b"/>
+  <text x="226" y="38" fill="#e6edf3" font-size="16" font-weight="600">Overview</text>
+  <!-- stat cards -->
+  <g>
+    <rect x="226" y="82" width="112" height="72" rx="10" fill="#151b26" stroke="#232c3b"/>
+    <text x="242" y="106" fill="#8b98ab" font-size="9">PROJECTS</text>
+    <text x="242" y="134" fill="#e6edf3" font-size="22" font-weight="700">3</text>
+    <rect x="348" y="82" width="112" height="72" rx="10" fill="#151b26" stroke="#232c3b"/>
+    <text x="364" y="106" fill="#8b98ab" font-size="9">VERSIONS</text>
+    <text x="364" y="134" fill="#e6edf3" font-size="22" font-weight="700">5</text>
+    <rect x="470" y="82" width="112" height="72" rx="10" fill="#151b26" stroke="#232c3b"/>
+    <text x="486" y="106" fill="#8b98ab" font-size="9">RUNS</text>
+    <text x="486" y="134" fill="#e6edf3" font-size="22" font-weight="700">60</text>
+    <rect x="592" y="82" width="112" height="72" rx="10" fill="#151b26" stroke="#232c3b"/>
+    <text x="608" y="106" fill="#8b98ab" font-size="9">TOKENS</text>
+    <text x="608" y="134" fill="#e6edf3" font-size="22" font-weight="700">22,601</text>
+    <rect x="714" y="82" width="112" height="72" rx="10" fill="#151b26" stroke="#232c3b"/>
+    <text x="730" y="106" fill="#8b98ab" font-size="9">EST. COST</text>
+    <text x="730" y="134" fill="#e6edf3" font-size="22" font-weight="700">$0.57</text>
+    <rect x="836" y="82" width="100" height="72" rx="10" fill="#151b26" stroke="#232c3b"/>
+    <text x="852" y="106" fill="#8b98ab" font-size="9">LATENCY</text>
+    <text x="852" y="134" fill="#e6edf3" font-size="20" font-weight="700">727ms</text>
+  </g>
+  <!-- charts -->
+  <rect x="226" y="172" width="350" height="150" rx="10" fill="#151b26" stroke="#232c3b"/>
+  <text x="242" y="194" fill="#8b98ab" font-size="10">RUNS OVER TIME</text>
+  <polyline fill="none" stroke="#6d8bff" stroke-width="2" points="246,300 300,270 350,285 400,240 450,255 500,215 560,230"/>
+  <rect x="586" y="172" width="350" height="150" rx="10" fill="#151b26" stroke="#232c3b"/>
+  <text x="602" y="194" fill="#8b98ab" font-size="10">TOKEN USAGE</text>
+  <polyline fill="none" stroke="#9b7bff" stroke-width="2" points="606,300 660,250 710,275 770,235 820,260 880,210 920,245"/>
+  <!-- table -->
+  <rect x="226" y="340" width="710" height="176" rx="10" fill="#151b26" stroke="#232c3b"/>
+  <text x="242" y="364" fill="#8b98ab" font-size="10">RECENT PROJECTS</text>
+  <line x1="226" y1="376" x2="936" y2="376" stroke="#232c3b"/>
+  <text x="242" y="400" fill="#e6edf3" font-size="12">medical-chatbot</text>
+  <text x="760" y="400" fill="#8b98ab" font-size="12">21 runs · $0.21</text>
+  <line x1="226" y1="414" x2="936" y2="414" stroke="#232c3b"/>
+  <text x="242" y="438" fill="#e6edf3" font-size="12">research-assistant</text>
+  <text x="760" y="438" fill="#8b98ab" font-size="12">20 runs · $0.17</text>
+  <line x1="226" y1="452" x2="936" y2="452" stroke="#232c3b"/>
+  <text x="242" y="476" fill="#e6edf3" font-size="12">resume-agent</text>
+  <text x="760" y="476" fill="#8b98ab" font-size="12">19 runs · $0.19</text>
+</svg>

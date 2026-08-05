@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ project_name }} · PromptAnalyzer{% endblock %}
+{% block heading %}{{ project_name }}{% endblock %}
+{% block content %}
+<div class="flex between">
+  <div class="section-title" style="margin-top:0">Prompt versions</div>
+  {% if versions|length > 1 %}
+  <a class="btn sm" href="/projects/{{ project_id }}/diff">⇄ Compare versions</a>
+  {% endif %}
+</div>
+
+{% if versions %}
+<div class="vlist">
+  {% for v in versions %}
+  <a class="vitem" href="/versions/{{ v.id }}" style="text-decoration:none;color:inherit">
+    <div class="vnum">v{{ v.version }}</div>
+    <div style="flex:1;min-width:0">
+      <div class="mono" style="white-space:pre-wrap">{{ v.system_prompt|truncate_text(160) }}</div>
+      <div class="vmeta" style="margin-top:8px">
+        {{ v.runs|num }} runs · avg {{ v.avg_latency|ms }} · {{ v.tokens|num }} tokens ·
+        avg {{ v.avg_cost|money }} · {{ v.created_at|dt }} ·
+        <span class="mono">{{ v.hash[:10] }}</span>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty card">No versioned system prompts yet for this project.</div>
+{% endif %}
+
+<div class="section-title">Recent runs</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Time</th><th>Input</th><th>Model</th><th>Latency</th><th>Tokens</th><th>Cost</th></tr></thead>
+    <tbody>
+      {% for r in runs.items %}
+      <tr onclick="location.href='/runs/{{ r.id }}'">
+        <td class="nowrap muted">{{ r.created_at|ago }}</td>
+        <td>{{ r.user_input|truncate_text(60) }}</td>
+        <td class="mono">{{ r.model or '—' }}</td>
+        <td class="nowrap">{{ r.latency_ms|ms }}</td>
+        <td>{{ r.total_tokens|num }}</td>
+        <td>{{ r.cost|money }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">No runs recorded yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div style="margin-top:12px"><a class="btn sm" href="/runs?project_id={{ project_id }}">View all runs →</a></div>
+{% endblock %}

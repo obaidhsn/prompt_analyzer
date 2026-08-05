@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Overview · PromptAnalyzer{% endblock %}
+{% block heading %}Overview{% endblock %}
+{% block content %}
+
+{% if stats.total_runs == 0 %}
+<div class="empty card">
+  <div class="big">🧬</div>
+  <h2>No inference logs yet</h2>
+  <p>Add one decorator to any LLM function and run your app:</p>
+  <pre class="prompt-box" style="max-width:520px;margin:16px auto;text-align:left">from promptanalyzer import track
+
+@track("medical-chatbot")
+def ask(message):
+    return client.chat.completions.create(...)</pre>
+  <p class="muted">Then reload this page to see prompt versions, runs, diffs and analytics.</p>
+</div>
+{% else %}
+
+<div class="grid cols-6">
+  <div class="card stat"><span class="label">Projects</span><span class="value">{{ stats.total_projects|num }}</span></div>
+  <div class="card stat"><span class="label">Prompt Versions</span><span class="value">{{ stats.total_versions|num }}</span></div>
+  <div class="card stat"><span class="label">Runs</span><span class="value">{{ stats.total_runs|num }}</span></div>
+  <div class="card stat"><span class="label">Tokens</span><span class="value">{{ stats.total_tokens|num }}</span></div>
+  <div class="card stat"><span class="label">Est. Cost</span><span class="value">{{ stats.total_cost|money }}</span></div>
+  <div class="card stat"><span class="label">Avg Latency</span><span class="value">{{ stats.avg_latency|ms }}</span></div>
+</div>
+
+<div class="grid cols-2" style="margin-top:16px">
+  <div class="card">
+    <div class="section-title" style="margin-top:0">Runs over time</div>
+    <canvas id="runsChart" height="120"></canvas>
+  </div>
+  <div class="card">
+    <div class="section-title" style="margin-top:0">Token usage</div>
+    <canvas id="tokensChart" height="120"></canvas>
+  </div>
+  <div class="card">
+    <div class="section-title" style="margin-top:0">Cost ($)</div>
+    <canvas id="costChart" height="120"></canvas>
+  </div>
+  <div class="card">
+    <div class="section-title" style="margin-top:0">Avg latency (ms)</div>
+    <canvas id="latencyChart" height="120"></canvas>
+  </div>
+</div>
+
+<div class="section-title">Recent projects</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Project</th><th>Versions</th><th>Runs</th><th>Tokens</th><th>Cost</th></tr></thead>
+    <tbody>
+      {% for p in projects %}
+      <tr onclick="location.href='/projects/{{ p.id }}'">
+        <td><b>{{ p.name }}</b></td>
+        <td><span class="pill-v">{{ p.versions }}</span></td>
+        <td>{{ p.runs|num }}</td>
+        <td>{{ p.tokens|num }}</td>
+        <td>{{ p.cost|money }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const SERIES = {{ series|safe }};
+  window.addEventListener('DOMContentLoaded', () => {
+    function build(id, label, data, color) {
+      const el = document.getElementById(id);
+      if (!el || typeof Chart === 'undefined') return;
+      new Chart(el, {
+        type: 'line',
+        data: { labels: SERIES.labels, datasets: [{
+          label, data, borderColor: color, backgroundColor: color + '22',
+          fill: true, tension: .35, pointRadius: 2, borderWidth: 2 }] },
+        options: { plugins: { legend: { display: false } },
+          scales: { x: { grid: { color: '#232c3b' }, ticks: { color: '#8b98ab' } },
+                    y: { grid: { color: '#232c3b' }, ticks: { color: '#8b98ab' } } } }
+      });
+    }
+    const tryBuild = () => {
+      if (typeof Chart === 'undefined') return setTimeout(tryBuild, 120);
+      build('runsChart', 'Runs', SERIES.runs, '#6d8bff');
+      build('tokensChart', 'Tokens', SERIES.tokens, '#9b7bff');
+      build('costChart', 'Cost', SERIES.cost, '#3fb950');
+      build('latencyChart', 'Latency', SERIES.latency, '#d29922');
+    };
+    tryBuild();
+  });
+</script>
+{% endblock %}

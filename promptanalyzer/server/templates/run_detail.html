@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Run #{{ run.id }} · PromptAnalyzer{% endblock %}
+{% block heading %}Run #{{ run.id }}{% endblock %}
+{% block content %}
+<div class="flex between">
+  <div class="btn-row">
+    <a class="btn sm" href="/runs">← Runs</a>
+    {% if run.provider %}<span class="badge provider">{{ run.provider }}</span>{% endif %}
+    <span class="badge mono">{{ run.model or 'unknown' }}</span>
+    {% if run.error %}<span class="badge err">error</span>{% else %}<span class="badge ok">ok</span>{% endif %}
+    {% if run.prompt_version_id %}<a class="pill-v" href="/versions/{{ run.prompt_version_id }}">view prompt version</a>{% endif %}
+  </div>
+  <span class="muted">{{ run.created_at|dt('%Y-%m-%d %H:%M:%S') }}</span>
+</div>
+
+<div class="grid cols-3" style="margin-top:16px">
+  <div class="card stat"><span class="label">Latency</span><span class="value">{{ run.latency_ms|ms }}</span></div>
+  <div class="card stat"><span class="label">Tokens</span><span class="value">{{ run.total_tokens|num }}</span>
+    <span class="sub">{{ run.input_tokens|num }} in · {{ run.output_tokens|num }} out</span></div>
+  <div class="card stat"><span class="label">Cost</span><span class="value">{{ run.cost|money }}</span></div>
+</div>
+
+{% if run.error %}
+<div class="block-label">Error</div>
+<div class="prompt-box" style="border-color:#f85149;color:#ffa198">{{ run.error }}</div>
+{% endif %}
+
+{% if run.system_prompt %}
+<div class="block-label">System prompt</div>
+<div class="prompt-box msg system">{{ run.system_prompt }}</div>
+{% endif %}
+
+<div class="block-label">User message</div>
+<div class="prompt-box msg user">{{ run.user_input or '—' }}</div>
+
+<div class="block-label">Assistant response</div>
+<div class="prompt-box msg assistant">{{ run.response or '—' }}</div>
+
+<div class="section-title">Details</div>
+<div class="card">
+  <div class="kv">
+    <span class="k">Project</span><span>{{ run.project }}</span>
+    <span class="k">Function</span><span class="mono">{{ run.function_name or '—' }}</span>
+    <span class="k">Provider</span><span>{{ run.provider or '—' }}</span>
+    <span class="k">Model</span><span class="mono">{{ run.model or '—' }}</span>
+    <span class="k">Environment</span><span>{{ run.env or '—' }}</span>
+    <span class="k">Tags</span><span>{% for t in run.tags or [] %}<span class="badge">{{ t }}</span> {% else %}—{% endfor %}</span>
+    <span class="k">Metadata</span><span class="mono">{{ run.metadata or '—' }}</span>
+  </div>
+</div>
+{% endblock %}

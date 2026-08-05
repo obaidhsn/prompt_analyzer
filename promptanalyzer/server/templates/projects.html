@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Projects · PromptAnalyzer{% endblock %}
+{% block heading %}Projects{% endblock %}
+{% block content %}
+{% if projects %}
+<div class="grid cols-3">
+  {% for p in projects %}
+  <a class="card" href="/projects/{{ p.id }}" style="text-decoration:none;color:inherit">
+    <div class="flex between">
+      <b style="font-size:15px">{{ p.name }}</b>
+      <span class="pill-v">{{ p.versions }} versions</span>
+    </div>
+    <div class="kv" style="margin-top:14px">
+      <span class="k">Runs</span><span>{{ p.runs|num }}</span>
+      <span class="k">Tokens</span><span>{{ p.tokens|num }}</span>
+      <span class="k">Cost</span><span>{{ p.cost|money }}</span>
+      <span class="k">Created</span><span class="muted">{{ p.created_at|dt }}</span>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty card"><div class="big">▦</div><h2>No projects yet</h2>
+  <p>Projects appear automatically the first time a <code>@track("name")</code> function runs.</p></div>
+{% endif %}
+{% endblock %}

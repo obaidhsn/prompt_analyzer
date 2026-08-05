@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Run Logs · PromptAnalyzer{% endblock %}
+{% block heading %}Run Logs{% endblock %}
+{% block content %}
+<form class="filters" hx-get="/runs" hx-target="#runs-results" hx-swap="outerHTML"
+      hx-trigger="change, submit, keyup delay:400ms from:input[name='q']">
+  <input class="input" type="search" name="q" placeholder="Search…" value="{{ filters.q or '' }}" />
+  <select name="model">
+    <option value="">All models</option>
+    {% for m in models %}<option value="{{ m }}" {{ 'selected' if filters.model == m }}>{{ m }}</option>{% endfor %}
+  </select>
+  <select name="provider">
+    <option value="">All providers</option>
+    {% for p in providers %}<option value="{{ p }}" {{ 'selected' if filters.provider == p }}>{{ p }}</option>{% endfor %}
+  </select>
+  {% if filters.project_id %}<input type="hidden" name="project_id" value="{{ filters.project_id }}" />{% endif %}
+  <a class="btn sm" href="/api/export?fmt=csv">⤓ CSV</a>
+  <a class="btn sm" href="/api/export?fmt=json">⤓ JSON</a>
+</form>
+
+{% include "partials/runs_table.html" %}
+{% endblock %}

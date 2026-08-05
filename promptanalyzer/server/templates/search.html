@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Search · PromptAnalyzer{% endblock %}
+{% block heading %}Global search{% endblock %}
+{% block content %}
+<form class="filters" hx-get="/search" hx-target="#runs-results" hx-swap="outerHTML"
+      hx-trigger="change, submit, keyup delay:400ms from:input[name='q']">
+  <input class="input" style="width:320px" type="search" name="q" autofocus
+         placeholder="Search system prompts, user messages, responses…" value="{{ q }}" />
+  <select name="model">
+    <option value="">All models</option>
+    {% for m in models %}<option value="{{ m }}" {{ 'selected' if filters.model == m }}>{{ m }}</option>{% endfor %}
+  </select>
+  <select name="provider">
+    <option value="">All providers</option>
+    {% for p in providers %}<option value="{{ p }}" {{ 'selected' if filters.provider == p }}>{{ p }}</option>{% endfor %}
+  </select>
+  <button class="btn primary sm" type="submit">Search</button>
+</form>
+
+{% include "partials/runs_table.html" %}
+{% endblock %}

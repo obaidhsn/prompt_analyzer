@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" font-family="ui-monospace,Menlo,Consolas,monospace">
+  <rect width="960" height="380" fill="#0b0e14"/>
+  <text x="24" y="34" fill="#e6edf3" font-size="16" font-weight="600" font-family="-apple-system,Segoe UI,sans-serif">Compare prompt versions</text>
+  <!-- selectors -->
+  <rect x="24" y="52" width="120" height="30" rx="8" fill="#151b26" stroke="#232c3b"/>
+  <text x="40" y="72" fill="#6d8bff" font-size="12">v1 — a1b2c3</text>
+  <text x="156" y="72" fill="#8b98ab" font-size="14">⇄</text>
+  <rect x="180" y="52" width="120" height="30" rx="8" fill="#151b26" stroke="#232c3b"/>
+  <text x="196" y="72" fill="#6d8bff" font-size="12">v2 — d4e5f6</text>
+  <!-- diff panel -->
+  <rect x="24" y="100" width="912" height="256" rx="10" fill="#0d1117" stroke="#232c3b"/>
+  <!-- headers -->
+  <text x="70" y="126" fill="#5b6676" font-size="11">v1</text>
+  <text x="510" y="126" fill="#5b6676" font-size="11">v2</text>
+  <line x1="456" y1="108" x2="456" y2="348" stroke="#232c3b"/>
+  <!-- left lines -->
+  <text x="44" y="156" fill="#c9d1d9" font-size="11">You are a doctor assistant.</text>
+  <rect x="40" y="168" width="410" height="18" fill="rgba(248,81,73,0.18)"/>
+  <text x="44" y="181" fill="#ffa198" font-size="11">Answer briefly.</text>
+  <text x="44" y="206" fill="#c9d1d9" font-size="11">Be professional.</text>
+  <!-- right lines -->
+  <text x="484" y="156" fill="#c9d1d9" font-size="11">You are a doctor assistant.</text>
+  <rect x="480" y="168" width="440" height="18" fill="rgba(63,185,80,0.18)"/>
+  <text x="484" y="181" fill="#7ee787" font-size="11">Always provide citations.</text>
+  <rect x="480" y="188" width="440" height="18" fill="rgba(63,185,80,0.18)"/>
+  <text x="484" y="201" fill="#7ee787" font-size="11">Cite primary sources.</text>
+  <text x="484" y="226" fill="#c9d1d9" font-size="11">Be professional.</text>
+  <!-- legend -->
+  <rect x="44" y="300" width="12" height="12" fill="rgba(63,185,80,0.4)"/>
+  <text x="62" y="311" fill="#8b98ab" font-size="11" font-family="-apple-system,sans-serif">added</text>
+  <rect x="130" y="300" width="12" height="12" fill="rgba(248,81,73,0.4)"/>
+  <text x="148" y="311" fill="#8b98ab" font-size="11" font-family="-apple-system,sans-serif">removed</text>
+</svg>
