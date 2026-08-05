@@ -1,0 +1,6 @@
+# Code owners for PromptAnalyzer.
+# These owners are automatically requested for review on any pull request.
+# Docs: https://docs.github.com/articles/about-code-owners
+
+# Default owner for everything in the repo.
+*       @obaidhsn
